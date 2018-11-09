@@ -19,30 +19,69 @@
 
 </head>
 <body>
-    <form id="survey" class="container">
-        <h4>1) Is this a sample question?</h4>
-        <div class="row mb-2">
-            <div class="col-2 text-center">Strongly Disagree</div>
-            <div class="col-2 text-center">Disagree</div>
-            <div class="col-2 text-center">Neutral</div>
-            <div class="col-2 text-center">Agree</div>
-            <div class="col-2 text-center">Strongly Agree</div>
-        </div>
-        <div class="row">
-            <div class="col-2 text-center"><input type="radio" name="q1" value=1></div>
-            <div class="col-2 text-center"><input type="radio" name="q1" value=2></div>
-            <div class="col-2 text-center"><input type="radio" name="q1" value=3></div>
-            <div class="col-2 text-center"><input type="radio" name="q1" value=4></div>
-            <div class="col-2 text-center"><input type="radio" name="q1" value=5></div>
-        </div>
-        <br>
-        2) How would you answer this question?
-        <div><input type="radio" name="q2" value=1> Opt1</div>
-        <div><input type="radio" name="q2" value=2> Opt2</div>
-        <div><input type="radio" name="q2" value=3> Opt3</div>
+    <div class="">
+        
+        <form id="survey" class="container">
+            <div class="row">
+                <!-- <div class="col"> -->
+                    <label class="col-2 h5" for="name">Your Name</label>
+                    <input class="col-3" type="text" name="name" id="name">
+                <!-- </div> -->
+                
+            </div>
 
-        <input type="submit">
-    </form>
+            <div class="row">
+                <!-- <div class="col"> -->
+                    <label class="col-2 h5" for="photoURL">Photo URL</label>
+                    <input class="col-3" type="text" name="photoURL" id="photoURL">
+                <!-- </div> -->
+            </div>
+            <br>
+            <div class="row">
+                <h5 class="col">Rate your enjoyment of the following game genres:</h5>
+            </div>
+
+            <div class="row">
+                <h6 class="col">1) Action</h6>
+            </div>
+            <div class="row mb-2">
+                <div class="col-2 text-center">Hate</div>
+                <div class="col-2 text-center">Dislike</div>
+                <div class="col-2 text-center">Neutral</div>
+                <div class="col-2 text-center">Like</div>
+                <div class="col-2 text-center">Love</div>
+            </div>
+            <div class="row">
+                <div class="col-2 text-center"><input type="radio" name="q01" value=1></div>
+                <div class="col-2 text-center"><input type="radio" name="q01" value=2></div>
+                <div class="col-2 text-center"><input type="radio" name="q01" value=3></div>
+                <div class="col-2 text-center"><input type="radio" name="q01" value=4></div>
+                <div class="col-2 text-center"><input type="radio" name="q01" value=5></div>
+            </div>
+            <br>
+
+            <div class="row">
+                <h6 class="col">2) Adventure</h6>
+            </div>
+            <div class="row mb-2">
+                <div class="col-2 text-center">Hate</div>
+                <div class="col-2 text-center">Dislike</div>
+                <div class="col-2 text-center">Neutral</div>
+                <div class="col-2 text-center">Like</div>
+                <div class="col-2 text-center">Love</div>
+            </div>
+            <div class="row">
+                <div class="col-2 text-center"><input type="radio" name="q02" value=1></div>
+                <div class="col-2 text-center"><input type="radio" name="q02" value=2></div>
+                <div class="col-2 text-center"><input type="radio" name="q02" value=3></div>
+                <div class="col-2 text-center"><input type="radio" name="q02" value=4></div>
+                <div class="col-2 text-center"><input type="radio" name="q02" value=5></div>
+            </div>
+
+            <input type="submit">
+        </form>
+
+    </div>
     
     <script type="text/javascript">
         $("#survey").on("submit", (event) => {
@@ -50,38 +89,36 @@
             console.log("PREVENTED")
 
             // Find values of form items
-            // console.log( $("#survey > input").length )
-            let inputs = $("#survey  input:checked")
+            let name = $("#name").val()
+            let photoURL = $("#photoURL").val()
+
+            let checkedInputs = $("#survey  input:checked")
             let scores = []
-            for (val of inputs) {
-                console.log(val)
-                scores.push(val)
+            for (answerCheck of checkedInputs) {
+                console.log(answerCheck)
+                scores.push( parseInt($(answerCheck).val()) )
             }
 
+            // TEST HELPER - fill out array to max length
             while (scores.length < 10) {
                 scores.push(3)
             }
 
-            if (scores.length <10) {
+            // Logs for testing
+            console.log(name)
+            console.log(photoURL)
+            console.log(scores)
+
+            // Ensure all form info was submitted
+            if (!name || !photoURL || scores.length <10) {
                 return console.log("Not all questions answered")
             }
 
             // Store input values in object
             let formData = { // Test entry for now
-                name: "Test2",
-                photo: "test.jpg",
-                scores: [
-                    3,
-                    3,
-                    3,
-                    3,
-                    3,
-                    3,
-                    3,
-                    3,
-                    3,
-                    3
-                ]
+                name: name,
+                photo: photoURL,
+                scores: scores
             }
 
             // Send object to API POST route
