@@ -1,4 +1,5 @@
-path = require("path")
+const path = require("path")
+
 module.exports = function(app) {
     app.get("/api/friends", (req, res) => {
         res.end()
