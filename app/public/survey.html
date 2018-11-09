@@ -238,11 +238,11 @@
     <script type="text/javascript">
         $("#survey").on("submit", (event) => {
             event.preventDefault()
-            console.log("PREVENTED")
+            console.log("FORM SUBMITTED")
 
             // Find values of form items
-            let name = $("#name").val()
-            let photoURL = $("#photoURL").val()
+            let name = $("#name").val().trim()
+            let photoURL = $("#photoURL").val().trim()
 
             let checkedInputs = $("#survey  input:checked")
             let scores = []
@@ -275,6 +275,9 @@
 
             // Send object to API POST route
             $.ajax("/api/friends", {type: "POST", data: formData})
+                .then( (response) => {
+                    console.log(response)
+                })
 
         })
     </script>
