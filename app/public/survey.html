@@ -5,9 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Friend Finder - Survey</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Import JQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
 </head>
 <body>
-    <form>
+    <form id="survey">
         1) Is this a sample question?
         <input type="radio" name="q1" value=1> Opt1
         <input type="radio" name="q1" value=2> Opt2
@@ -18,8 +22,43 @@
         <div><input type="radio" name="q2" value=2> Opt2</div>
         <div><input type="radio" name="q2" value=3> Opt3</div>
 
-        <input type="submit" value="Submit">
+        <input type="submit">
     </form>
     
+    <script type="text/javascript">
+        $("#survey").on("submit", (event) => {
+            event.preventDefault()
+            console.log("PREVENTED")
+
+            // Find values of form items
+            // console.log( $("#survey > input").length )
+            let inputs = $("#survey  input:checked")
+            for (val of inputs) {
+                console.log(val)
+            }
+
+            // Store input values in object
+            let formData = { // Test entry for now
+                name: "Test2",
+                photo: "test.jpg",
+                scores: [
+                    3,
+                    3,
+                    3,
+                    3,
+                    3,
+                    3,
+                    3,
+                    3,
+                    3,
+                    3
+                ]
+            }
+
+            // Send object to API POST route
+            $.ajax("/api/friends", {type: "POST", data: formData})
+
+        })
+    </script>
 </body>
 </html>
